@@ -10,10 +10,10 @@ app = FastAPI(title="Symhpox Treelife Interview Mock Server")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["https://symphox.onrender.com/"],  # Allows all origins
     allow_credentials=True,  # Allows cookies to be included in requests
     allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["*"],  # Allows all head
+    allow_headers=["Authorization", "Content-Type"],  # Allows all head
 )
 
 
@@ -69,16 +69,30 @@ FAKE_PRODUCTS = [
     for gem_type in FAKE_GEM_TYPES
 ]
 
-bearer_token_required: callable = HTTPBearer()
+bearer_token_required: callable = HTTPBearer(auto_error=False)
 
 
+# def login_required(
+#     credentials: HTTPAuthorizationCredentials = Depends(bearer_token_required),
+# ) -> HTTPAuthorizationCredentials:
+#     if credentials.credentials == FAKE_AUTH_TOKEN:
+#         return credentials
+
+#     raise HTTPException(403)
+    
 def login_required(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_token_required),
 ) -> HTTPAuthorizationCredentials:
+    print("login_required called")
+    print(f"Received credentials: {credentials}")
+    if credentials is None:
+        print("No credentials provided")
+        raise HTTPException(status_code=401, detail="Not authenticated")
     if credentials.credentials == FAKE_AUTH_TOKEN:
+        print("Authentication successful")
         return credentials
-
-    raise HTTPException(403)
+    print("Authentication failed")
+    raise HTTPException(status_code=401, detail="Invalid token")
 
 
 @app.post("/login")
