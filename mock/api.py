@@ -6,17 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field
 
-
-app = FastAPI(title="Symhpox Treelife Interview Mock Server", debug=True)
+app = FastAPI(title="Symhpox Treelife Interview Mock Server")
 
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=["*"],  # Allows all origins
-    allow_origins=["https://symphox.onrender.com"],  # Allows all origins
+    allow_origins=["*"],  # Allows all origins
     allow_credentials=True,  # Allows cookies to be included in requests
     allow_methods=["*"],  # Allows all HTTP methods
-    # allow_headers=["*"],  # Allows all head
-    allow_headers=["Authorization", "Content-Type"],
+    allow_headers=["*"],  # Allows all head
 )
 
 
@@ -78,12 +75,9 @@ bearer_token_required: callable = HTTPBearer()
 def login_required(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_token_required),
 ) -> HTTPAuthorizationCredentials:
-    print("login_required called")
-    print(f"Received credentials: {credentials}")
     if credentials.credentials == FAKE_AUTH_TOKEN:
-        print("Authentication successful")
         return credentials
-    print("Authentication failed")
+
     raise HTTPException(403)
 
 
