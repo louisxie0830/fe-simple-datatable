@@ -13,4 +13,5 @@ COPY mock/api.py /app
 
 EXPOSE 8000
 
-CMD ["uvicorn", "api:app", "--host", "127.0.0.1", "--port", "8000"]
+
+CMD ["python3", "api.py"]
