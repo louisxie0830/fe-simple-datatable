@@ -14,7 +14,8 @@ app.add_middleware(
     allow_origins=["*"],  # Allows all origins
     allow_credentials=True,  # Allows cookies to be included in requests
     allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["*"],  # Allows all head
+    # allow_headers=["*"],  # Allows all head
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 
