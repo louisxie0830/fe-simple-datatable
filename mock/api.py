@@ -94,6 +94,18 @@ def login_required(
     print("Authentication failed")
     raise HTTPException(status_code=401, detail="Invalid token")
 
+@app.middleware("http")
+async def handle_options(request: Request, call_next):
+    if request.method == "OPTIONS":
+        response = Response()
+        response.headers["Access-Control-Allow-Origin"] = "https://symphox.onrender.com"
+        response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
+    else:
+        response = await call_next(request)
+        return response
 
 @app.post("/login")
 def login(payload: LoginPayload) -> LoginSuccessResponse:
