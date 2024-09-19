@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 COPY mock/req.txt /
 RUN pip3 install -q pip --upgrade && \
     pip3 install -q -r req.txt && \
-    rm mock/req.txt
+    rm req.txt
 
 WORKDIR /app
 COPY mock/api.py /app
