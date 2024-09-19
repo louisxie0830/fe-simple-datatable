@@ -9,7 +9,6 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="Symhpox Treelife Interview Mock Server", debug=True)
 
-https://symphox.onrender.com
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=["*"],  # Allows all origins
