@@ -1,4 +1,3 @@
-import logging
 from enum import Enum
 from random import choice, randint
 
@@ -77,10 +76,12 @@ bearer_token_required: callable = HTTPBearer()
 def login_required(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_token_required),
 ) -> HTTPAuthorizationCredentials:
-    logging.info(f"Received token: {credentials.credentials}")
+    print("login_required called")
+    print(f"Received credentials: {credentials}")
     if credentials.credentials == FAKE_AUTH_TOKEN:
+        print("Authentication successful")
         return credentials
-    logging.warning("Invalid token received")
+    print("Authentication failed")
     raise HTTPException(403)
 
 
