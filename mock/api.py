@@ -10,10 +10,10 @@ app = FastAPI(title="Symhpox Treelife Interview Mock Server")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["http://localhost:5173", "https://fe-simple-datatable.onrender.com", "*"],  # Allows all origins
     allow_credentials=True,  # Allows cookies to be included in requests
     allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["*"],  # Allows all head
+    allow_headers=["Authorization", "Content-Type", "*"],  # Allows all head
 )
 
 
