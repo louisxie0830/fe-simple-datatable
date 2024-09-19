@@ -8,10 +8,11 @@ RUN pip3 install -q pip --upgrade && \
     pip3 install -q -r req.txt && \
     rm req.txt
 
+RUN pip3 freeze
+    
 WORKDIR /app
 COPY mock/api.py /app
 
 EXPOSE 8000
 
-
-CMD ["python3", "api.py"]
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
