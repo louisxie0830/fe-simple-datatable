@@ -5,15 +5,18 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field
+from fastapi_debug_toolbar.middleware import DebugToolbarMiddleware
 
-app = FastAPI(title="Symhpox Treelife Interview Mock Server")
+
+app = FastAPI(title="Symhpox Treelife Interview Mock Server", debug=True)
 
 app.add_middleware(
+    DebugToolbarMiddleware,
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://symphox.onrender.com", "https://fe-simple-datatable.onrender.com", "*"],  # Allows all origins
+    allow_origins=["*"],  # Allows all origins
     allow_credentials=True,  # Allows cookies to be included in requests
     allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["Authorization", "Content-Type", "*"],  # Allows all head
+    allow_headers=["*"],  # Allows all head
 )
 
 
